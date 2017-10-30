@@ -1,0 +1,73 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- {% load static %} -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
+    <title>Longin and Registration | Home</title>
+</head>
+<body>
+    <div>
+        <h1>Registration</h1>
+        <form action='/register' method='POST'>
+            {% csrf_token %}
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Name:</span>
+                    <input type="text" name="name" class="form-control" id="name" aria-describedby="basic-addon1">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"> Username:</span>
+                    <input type="text" name="username" id="username" class="form-control" aria-describedby="basic-addon1">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Date Hired:</span>
+                    <input type="date" name="dateHired" min="2017-10-02"class="form-control" aria-describedby="basic-addon1"><br>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Password:</span>
+                    <input type="password" name="password" id="password" class="form-control" aria-describedby="basic-addon1">
+                </div>
+                <br>
+                <p>password must be atleast 8 characters</p>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Confirn password:</span>
+                    <input type="password" name="confirm" id="confirmpw" class="form-control" aria-describedby="basic-addon1">
+                </div>
+                <br>
+
+            </div>
+            <input type="submit" class="btn btn-secondary" value="REGISTER">
+            <br><br><br><br>
+        </form>
+    </div>
+    <div class=login>
+        <h1>Log In</h1>
+            <form action='/login' method='POST'>
+                {% csrf_token %}
+                <div class="col-lg-4">
+                    <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Email:</span>
+                    <input type="text" name="username" id="email" class="form-control" aria-describedby="basic-addon1">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Password:</span>
+                    <input type="password" name="password" id="password" class="form-control" aria-describedby="basic-addon1">
+                </div>
+                <br>
+                </div>
+                <input type="submit"class="btn btn-secondary"  value="LOG IN">
+            </form>
+        <div class=red>
+            {% if messages %}
+                {% for message in messages %}
+                <h1>{{message}}</h1>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
