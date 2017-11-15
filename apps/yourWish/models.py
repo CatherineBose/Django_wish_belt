@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, date
 from datetime import *
 # django.utils.timezone.now()
 from django.db import models
-
+nameFilterREGEX = re.compile(r'^[^\W_]+(-[^\W_]+)?$', re.U)
 class UserManager(models.Manager):
     def login_validator(self, postData):
         errors = []
@@ -25,19 +25,15 @@ class UserManager(models.Manager):
         #Initialize empty array for errors 
         errors = [] 
         # check first name and last name length
-        if len(postData['first_name']) < 2 or len(postData['last_name']) < 2:
+        if len(postData['name']) < 2 or len(postData['username']) < 2:
             errors.append("User first name and last name should be more than 2 characters")
         # check password
         if len(postData['password']) < 8:
             errors.append("Password should have more than 8 characters") 
-        # check first_name and last_name for valid characters
-        if not re.match(nameFilterREGEX, postData['first_name']) or not re.match(nameFilterREGEX, postData['last_name']):
-            errors.append("User first name and last name should contains only letters no special characters allowed")  
-        # check email with Email_REgex
-        if not re.match(emailFilterREGEX, postData['email']):
-            errors.append("Not a valid email, check ")
-        if len(User.objects.filter(email=postData['email'])) > 0:
-            errors.append("email already in use") 
+        # check name and username for valid characters
+        if not re.match(nameFilterREGEX, postData['name']) or not re.match(nameFilterREGEX, postData['username']):
+            errors.append("User name and username should contains only letters no special characters allowed")  
+
         # check password
         if postData['password'] != postData['confirm']:
             errors.append("Password doesn't match")
@@ -47,9 +43,8 @@ class UserManager(models.Manager):
                 hashed = bcrypt.hashpw((postData['password'].encode()), bcrypt.gensalt(5))
                 print "hashed code: ", hashed
                 new_user = self.create(
-                    first_name=postData['first_name'],
-                    last_name=postData['last_name'],
-                    email=postData['email'],
+                    name=postData['name'],
+                    username=postData['username'],
                     password=hashed
                 )
                 return new_user
